@@ -5,6 +5,7 @@ _OS = {
     "linux": ["linux"],
     "macos": ["macos", "darwin"],
     "windows": ["windows"],
+    "wasi": ["wasi"]
 }
 
 def declare_platforms():
