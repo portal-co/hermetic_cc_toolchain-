@@ -5,7 +5,6 @@ _OS = {
     "linux": ["linux"],
     "macos": ["macos", "darwin"],
     "windows": ["windows"],
-    "wasi": ["wasi"]
 }
 
 def declare_platforms():
@@ -14,6 +13,7 @@ def declare_platforms():
         for bzlos, oss in _OS.items():
             for os in oss:
                 declare_platform(gocpu, zigcpu, bzlos, os)
+    declare_platform("wasm32", "wasm32", "wasi", "wasi")
 
 def declare_libc_aware_platforms():
     # create @zig_sdk//{os}_{arch}_platform entries with zig and go conventions
@@ -28,6 +28,15 @@ def declare_libc_aware_platforms():
                 suffix = "_{}".format(libc),
                 extra_constraints = ["@zig_sdk//libc:{}".format(libc)],
             )
+    libc = "musl"
+    declare_platform(
+        "wasm32",
+        "wasm32",
+        "wasi",
+        "wasi",
+        suffix = "_{}".format(libc),
+        extra_constraints = ["@zig_sdk//libc:{}".format(libc)],
+    )
 
 def declare_platform(gocpu, zigcpu, bzlos, os, suffix = "", extra_constraints = []):
     constraint_values = [
